@@ -1,0 +1,2107 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FrostyCore</name>
+    </assembly>
+    <members>
+        <member name="T:Frosty.Core.AssetExportType">
+            <summary>
+            Represents an extension and description pair that is combined to make a valid export filter
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.AssetExportType.Extension">
+            <summary>
+            Gets the extension.
+            </summary>
+            <returns>The extension.</returns>
+        </member>
+        <member name="P:Frosty.Core.AssetExportType.Description">
+            <summary>
+            Gets the description.
+            </summary>
+            <returns>The description.</returns>
+        </member>
+        <member name="P:Frosty.Core.AssetExportType.FilterString">
+            <summary>
+            Gets a valid filter string using the combination of the description and extension variables
+            </summary>
+            <returns>A valid filter string</returns>
+        </member>
+        <member name="M:Frosty.Core.AssetExportType.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.AssetExportType"/> struct with the extension and description.
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.AssetImportType">
+            <summary>
+            Represents an extension and description pair that is combined to make a valid import filter
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.AssetImportType.Extension">
+            <summary>
+            Gets the extension.
+            </summary>
+            <returns>The extension.</returns>
+        </member>
+        <member name="P:Frosty.Core.AssetImportType.Description">
+            <summary>
+            Gets the description.
+            </summary>
+            <returns>The description.</returns>
+        </member>
+        <member name="P:Frosty.Core.AssetImportType.FilterString">
+            <summary>
+            Gets a valid filter string using the combination of the description and extension variables
+            </summary>
+            <returns>A valid filter string</returns>
+        </member>
+        <member name="M:Frosty.Core.AssetImportType.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.AssetImportType"/> struct with the extension and description.
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.AssetDefinition">
+            <summary>
+            Describes editor related functionality for a specified asset type. Classes that derive from this class
+            can set the icon that will be used, override the existing editor and define import/export methods, used in conjunction with the
+            <see cref="T:Frosty.Core.Attributes.RegisterAssetDefinitionAttribute"/> class to register asset types to specific <see cref="T:Frosty.Core.AssetDefinition"/> derivatives.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.AssetDefinition.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.AssetDefinition"/> class.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.AssetDefinition.GetSupportedExportTypes(System.Collections.Generic.List{Frosty.Core.AssetExportType})">
+            <summary>
+            When implemented in a derived class, allows the asset definition to provide a list of valid types for exporting an asset.
+            </summary>
+            <param name="exportTypes">A list of <see cref="T:Frosty.Core.AssetExportType"/> to be populated.</param>
+        </member>
+        <member name="M:Frosty.Core.AssetDefinition.GetSupportedImportTypes(System.Collections.Generic.List{Frosty.Core.AssetImportType})">
+            <summary>
+            When impemented in a derived class, allows the asset definition to provide a list of valid types for importing an asset.
+            </summary>
+            <param name="importTypes">A list of <see cref="T:Frosty.Core.AssetImportType"/> to be populated.</param>
+        </member>
+        <member name="M:Frosty.Core.AssetDefinition.GetEditor(FrostySdk.Interfaces.ILogger)">
+            <summary>
+            When implemented in a derived class, returns a custom editor that is used to edit the asset defined by the asset definition. Must inherit from <see cref="T:Frosty.Core.Controls.FrostyAssetEditor"/>.
+            </summary>
+            <param name="logger">An <see cref="T:FrostySdk.Interfaces.ILogger"/> that represents the logging interface to use.</param>
+            <returns>A custom editor that is used to edit the asset defined by the asset definition. Must inherit from <see cref="T:Frosty.Core.Controls.FrostyAssetEditor"/>.</returns>
+        </member>
+        <member name="M:Frosty.Core.AssetDefinition.GetIcon">
+            <summary>
+            When implemented in a derived class, returns an <see cref="T:System.Windows.Media.ImageSource"/> that represents a generic icon for this asset type
+            </summary>
+            <returns>An <see cref="T:System.Windows.Media.ImageSource"/> that represents a generic icon for this asset type</returns>
+        </member>
+        <member name="M:Frosty.Core.AssetDefinition.GetIcon(FrostySdk.Managers.Entries.AssetEntry,System.Double,System.Double)">
+            <summary>
+            When implemented in a derived class, returns an <see cref="T:System.Windows.Media.ImageSource"/> that represents an icon for the specified asset, the width and height parameters define a best size to use
+            for the resulting icon (However these values can be PositiveInfinity meaning no size information available).
+            </summary>
+            <param name="entry">The <see cref="T:FrostySdk.Managers.Entries.AssetEntry"/> this icon will represent.</param>
+            <param name="width">A double representing the estimated width to use (can be PositiveInfinity).</param>
+            <param name="height">A double representing the estimated height to use (can be PositiveInfinity).</param>
+            <returns>An <see cref="T:System.Windows.Media.ImageSource"/> that represents an icon for the specified asset.</returns>
+        </member>
+        <member name="M:Frosty.Core.AssetDefinition.Export(FrostySdk.Managers.Entries.EbxAssetEntry,System.String,System.String)">
+            <summary>
+            When implemented in a derived class, performs the actual export of the asset, providing the filter type and path to export to.
+            </summary>
+            <param name="entry">The <see cref="T:FrostySdk.Managers.Entries.AssetEntry"/> to export.</param>
+            <param name="path">A string representing the path and filename to export to.</param>
+            <param name="filterType">A string representing the chosen filter type to export as.</param>
+            <returns>True if export was successful, False otherwise.</returns>
+        </member>
+        <member name="M:Frosty.Core.AssetDefinition.Import(FrostySdk.Managers.Entries.EbxAssetEntry,System.String,System.String)">
+            <summary>
+            When implemented in a derived class, performs the actual import of the asset, providing the filter type and path to import from.
+            </summary>
+            <param name="entry">The <see cref="T:FrostySdk.Managers.Entries.AssetEntry"/> to import the data to.</param>
+            <param name="path">A string representing the path and filename to import from.</param>
+            <param name="filterType">A string representing the chosen filter type to import as.</param>
+            <returns>True if import was successful, False otherwise.</returns>
+        </member>
+        <member name="T:Frosty.Core.Attributes.PluginAuthorAttribute">
+            <summary>
+            This attribute defines the plugins author that will be displayed when loaded.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Attributes.PluginAuthorAttribute.Author">
+            <summary>
+            Gets the author of the plugin.
+            </summary>
+            <returns>The author.</returns>
+        </member>
+        <member name="M:Frosty.Core.Attributes.PluginAuthorAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.Attributes.PluginAuthorAttribute"/> class with the author of the plugin.
+            </summary>
+            <param name="author">A string containing the author.</param>
+        </member>
+        <member name="T:Frosty.Core.Attributes.PluginDisplayNameAttribute">
+            <summary>
+            This attribute defines the plugins display name that will be displayed when loaded.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Attributes.PluginDisplayNameAttribute.DisplayName">
+            <summary>
+            Gets the display name of the plugin.
+            </summary>
+            <returns>The display name.</returns>
+        </member>
+        <member name="M:Frosty.Core.Attributes.PluginDisplayNameAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.Attributes.PluginDisplayNameAttribute"/> class with the display name of the plugin.
+            </summary>
+            <param name="displayName">A string containing the display name.</param>
+        </member>
+        <member name="T:Frosty.Core.Attributes.PluginNotValidForProfileAttribute">
+            <summary>
+            This attribute tells the plugin system not to load this plugin for the specified profile.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Attributes.PluginNotValidForProfileAttribute.ProfileVersion">
+            <summary>
+            Gets the profile version that the plugin will not be loaded for.
+            </summary>
+            <returns>The profile version.</returns>
+        </member>
+        <member name="M:Frosty.Core.Attributes.PluginNotValidForProfileAttribute.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.Attributes.PluginNotValidForProfileAttribute"/> class with the profile version.
+            </summary>
+            <param name="profileVersion">An int representing profile version.</param>
+        </member>
+        <member name="T:Frosty.Core.Attributes.PluginValidForProfileAttribute">
+            <summary>
+            This attribute tells the plugin system to load this plugin for the specified profile.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Attributes.PluginValidForProfileAttribute.ProfileVersion">
+            <summary>
+            Gets the profile name the plugin will be loaded for.
+            </summary>
+            <returns>The profile name.</returns>
+        </member>
+        <member name="M:Frosty.Core.Attributes.PluginValidForProfileAttribute.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.Attributes.PluginValidForProfileAttribute"/> class with the profile version.
+            </summary>
+            <param name="profileVersion">An int representing profile version.</param>
+        </member>
+        <member name="T:Frosty.Core.Attributes.PluginVersionAttribute">
+            <summary>
+            This attribute defines the plugins version that will be displayed when loaded.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Attributes.PluginVersionAttribute.Version">
+            <summary>
+            Gets the version of the plugin.
+            </summary>
+            <returns>The version.</returns>
+        </member>
+        <member name="M:Frosty.Core.Attributes.PluginVersionAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.Attributes.PluginVersionAttribute"/> class with the version of the plugin.
+            </summary>
+            <param name="version">A string containing the version.</param>
+        </member>
+        <member name="T:Frosty.Core.Attributes.RegisterAssetDefinitionAttribute">
+            <summary>
+            This attribute registers a new asset definition to the plugin system.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterAssetDefinitionAttribute.LookupType">
+            <summary>
+            Gets the name to use as the lookup type for this asset definition.
+            </summary>
+            <returns>The name to use as the lookup type.</returns>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterAssetDefinitionAttribute.AssetDefinitionType">
+            <summary>
+            Gets the type to use to construct the asset definition class. Must inherit from <see cref="T:Frosty.Core.AssetDefinition"/>.
+            </summary>
+            <returns>The type to use to construct the asset definition class.</returns>
+        </member>
+        <member name="M:Frosty.Core.Attributes.RegisterAssetDefinitionAttribute.#ctor(System.String,System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.Attributes.RegisterAssetDefinitionAttribute"/> class with the lookup name and derived asset definition class type.
+            </summary>
+            <param name="lookupType">A string containing the name to use as the lookup type.</param>
+            <param name="type">A <see cref="T:System.Type"/> representing the type to use to construct the asset definition class. Must inherit from <see cref="T:Frosty.Core.AssetDefinition"/>.</param>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterCustomAssetManagerAttribute.CustomAssetManagerClassType">
+            <summary>
+            Gets the clas type to use to define a custom asset manager.
+            </summary>
+            <returns>The clas type to use to define a custom asset manager</returns>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterCustomAssetManagerAttribute.CustomAssetManagerType">
+            <summary>
+            Gets the type to use to define a custom asset manager.
+            </summary>
+            <returns>The type to use to define a custom asset manager</returns>
+        </member>
+        <member name="M:Frosty.Core.Attributes.RegisterCustomAssetManagerAttribute.#ctor(System.String,System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.Attributes.RegisterCustomAssetManagerAttribute"/> class.
+            </summary>
+            <param name="type">The type of the custom asset manager/></param>
+            <param name="classType">The class type of the custom asset manager. This type must derive from <see cref="T:FrostySdk.Managers.ICustomAssetManager"/></param>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterExecutionAction.ExecutionActionType">
+            <summary>
+            Gets the type to use to define a execution action.
+            </summary>
+            <returns>The type to use to define a custom execution action</returns>
+        </member>
+        <member name="M:Frosty.Core.Attributes.RegisterExecutionAction.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.Attributes.RegisterExecutionAction"/> class.
+            </summary>
+            <param name="type">The type of the custom execution action. This type must derive from <see cref="!:ICustomEditorExecution"/></param>
+        </member>
+        <member name="T:Frosty.Core.Attributes.RegisterDataExplorerContextMenuAttribute">
+            <summary>
+            This attribute registers a data explorer context menu item to the plugin system.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterDataExplorerContextMenuAttribute.ContextMenuItemExtensionType">
+            <summary>
+            Gets the type to use to construct the tab item.
+            </summary>
+            <returns>The type to use to construct the tab item</returns>
+        </member>
+        <member name="M:Frosty.Core.Attributes.RegisterDataExplorerContextMenuAttribute.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.Attributes.RegisterDataExplorerContextMenuAttribute"/> class using the tab extension type.
+            </summary>
+            <param name="type">The type of the menu extension. This type must derive from <see cref="T:System.Windows.Controls.ContextMenu"/></param>
+        </member>
+        <member name="T:Frosty.Core.Attributes.RegisterGlobalTypeEditorAttribute">
+            <summary>
+            This attribute registers a new property grid type editor for the specified type.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterGlobalTypeEditorAttribute.LookupName">
+            <summary>
+            Gets the name of the type the type editor will be used for.
+            </summary>
+            <returns>The name of the type.</returns>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterGlobalTypeEditorAttribute.EditorType">
+            <summary>
+            Gets the type to use to construct the property grid type editor.
+            </summary>
+            <returns>The type of the property grid type editor.</returns>
+        </member>
+        <member name="M:Frosty.Core.Attributes.RegisterGlobalTypeEditorAttribute.#ctor(System.String,System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.Attributes.RegisterGlobalTypeEditorAttribute"/> class using the lookup name and type editor type.
+            </summary>
+            <param name="lookupName">The name of the type the type editor will be used for</param>
+            <param name="type">The type to use to construct the property grid type editor</param>
+        </member>
+        <member name="T:Frosty.Core.Attributes.RegisterLocalizedStringDatabaseAttribute">
+            <summary>
+            This attribute registers the specified type as the type to use to construct the localized string database for use within
+            the editor. The type must implement the <see cref="T:Frosty.Core.ILocalizedStringDatabase"/> interface.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterLocalizedStringDatabaseAttribute.LocalizedStringDatabaseType">
+            <summary>
+            Gets the type to use to construct the localized string database. Must implement the <see cref="T:Frosty.Core.ILocalizedStringDatabase"/> interface.
+            </summary>
+            <returns>The type to use to construct the localized string database.</returns>
+        </member>
+        <member name="M:Frosty.Core.Attributes.RegisterLocalizedStringDatabaseAttribute.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.Attributes.RegisterLocalizedStringDatabaseAttribute"/> class with the localized string database type.
+            </summary>
+            <param name="type">A type containing the type to use to construct the localized string database. Must implement the <see cref="T:Frosty.Core.ILocalizedStringDatabase"/> interface.</param>
+        </member>
+        <member name="T:Frosty.Core.Attributes.RegisterMenuExtensionAttribute">
+            <summary>
+            This attribute registers a custom menu item to the plugin system.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterMenuExtensionAttribute.MenuExtensionType">
+            <summary>
+            Gets the type to use to construct the menu item.
+            </summary>
+            <returns>The type to use to construct the menu item</returns>
+        </member>
+        <member name="M:Frosty.Core.Attributes.RegisterMenuExtensionAttribute.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.Attributes.RegisterMenuExtensionAttribute"/> class using the menu extension type.
+            </summary>
+            <param name="type">The type of the menu extension. This type must derive from <see cref="T:Frosty.Core.MenuExtension"/></param>
+        </member>
+        <member name="T:Frosty.Core.Attributes.RegisterOptionsExtensionAttribute">
+            <summary>
+            This attribute registers a custom options item to the plugin system.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterOptionsExtensionAttribute.OptionsType">
+            <summary>
+            Gets the type to use to construct the custom options item.
+            </summary>
+            <returns>The type to use to construct the custom options item.</returns>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterOptionsExtensionAttribute.ManagerType">
+            <summary>
+            Gets the manager type to define if the options extension should be loaded for the Mod Manager or Editor.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Attributes.RegisterOptionsExtensionAttribute.#ctor(System.Type,Frosty.Core.PluginManagerType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.Attributes.RegisterOptionsExtensionAttribute"/> class using the options extension type.
+            </summary>
+            <param name="optionsType">The type of the option extension. This type must derive from <see cref="T:Frosty.Core.OptionsExtension"/></param>
+        </member>
+        <member name="T:Frosty.Core.Attributes.RegisterProfileAttribute">
+            <summary>
+            This attribute registers a custom profile to the plugin system.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterProfileAttribute.ProfileType">
+            <summary>
+            Gets the type to use to construct the profile. Must implement the <see cref="T:FrostySdk.Interfaces.IProfile"/> interface
+            </summary>
+            <returns>The type to use to construct the profile</returns>
+        </member>
+        <member name="M:Frosty.Core.Attributes.RegisterProfileAttribute.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.Attributes.RegisterProfileAttribute"/> class with the profile type.
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.Attributes.ShaderType">
+            <summary>
+            Specifies a shaders type.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.Attributes.ShaderType.VertexShader">
+            <summary>
+            Vertex shader.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.Attributes.ShaderType.PixelShader">
+            <summary>
+            Pixel shader.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.Attributes.ShaderType.ComputeShader">
+            <summary>
+            Compute shader.
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.Attributes.RegisterShaderAttribute">
+            <summary>
+            This attribute registers a custom vertex, pixel or compute shader to the plugin system that is retrievable via the <see cref="T:Frosty.Core.Viewport.FrostyShaderDb"/> class.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterShaderAttribute.ShaderType">
+            <summary>
+            Gets the type of shader to register.
+            </summary>
+            <returns>The type of shader to register.</returns>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterShaderAttribute.ResourceName">
+            <summary>
+            Gets the name of the embedded resource that represents the shader data in Namespace.ResourceName format.
+            </summary>
+            <returns>The name of the embedded resource.</returns>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterShaderAttribute.KeyName">
+            <summary>
+            Gets the key that can be used to obtain the shader from the <see cref="T:Frosty.Core.Viewport.FrostyShaderDb"/> class.
+            </summary>
+            <returns>The key name.</returns>
+        </member>
+        <member name="M:Frosty.Core.Attributes.RegisterShaderAttribute.#ctor(Frosty.Core.Attributes.ShaderType,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.Attributes.RegisterShaderAttribute"/> class using the shader type, key and resource name.
+            </summary>
+            <param name="type">The type of shader to register.</param>
+            <param name="key">The key used to obtain the shader from the <see cref="T:Frosty.Core.Viewport.FrostyShaderDb"/> class.</param>
+            <param name="name">The name of the embedded resource in Namespace.ResourceName format</param>
+        </member>
+        <member name="T:Frosty.Core.Attributes.RegisterTabExtensionAttribute">
+            <summary>
+            This attribute registers a custom tab item to the plugin system.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterTabExtensionAttribute.TabExtensionType">
+            <summary>
+            Gets the type to use to construct the tab item.
+            </summary>
+            <returns>The type to use to construct the tab item</returns>
+        </member>
+        <member name="M:Frosty.Core.Attributes.RegisterTabExtensionAttribute.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.Attributes.RegisterTabExtensionAttribute"/> class using the tab extension type.
+            </summary>
+            <param name="type">The type of the menu extension. This type must derive from <see cref="T:Frosty.Core.MenuExtension"/></param>
+        </member>
+        <member name="T:Frosty.Core.Attributes.RegisterThirdPartyDllAttribute">
+            <summary>
+            This attribute registers a referenced assembly to the plugin system, any attempts to load this assembly will be redirected to the
+            third party directory.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterThirdPartyDllAttribute.DllName">
+            <summary>
+            Gets the name of the referenced assembly without the extension.
+            </summary>
+            <returns>The name of the referenced assembly.</returns>
+        </member>
+        <member name="M:Frosty.Core.Attributes.RegisterThirdPartyDllAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.Attributes.RegisterThirdPartyDllAttribute"/> class with the referenced assembly name.
+            </summary>
+            <param name="name">A string representing the name of the referenced assembly without the extension</param>
+        </member>
+        <member name="T:Frosty.Core.Attributes.RegisterToolbarExtensionAttribute">
+            <summary>
+            This attribute registers a custom toolbar item to the plugin system.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Attributes.RegisterToolbarExtensionAttribute.ToolbarExtensionType">
+            <summary>
+            Gets the type to use to construct the toolbar item.
+            </summary>
+            <returns>The type to use to construct the toolbar item</returns>
+        </member>
+        <member name="M:Frosty.Core.Attributes.RegisterToolbarExtensionAttribute.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.Attributes.RegisterToolbarExtensionAttribute"/> class using the toolbar extension type.
+            </summary>
+            <param name="type">The type of the toolbar extension. This type must derive from <see cref="T:Frosty.Core.ToolbarExtension"/></param>
+        </member>
+        <member name="M:Frosty.Core.Controls.VirtualizingTilePanel.MeasureOverride(System.Windows.Size)">
+            <summary>
+            Measure the children
+            </summary>
+            <param name="availableSize">Size available</param>
+            <returns>Size desired</returns>
+        </member>
+        <member name="M:Frosty.Core.Controls.VirtualizingTilePanel.ArrangeOverride(System.Windows.Size)">
+            <summary>
+            Arrange the children
+            </summary>
+            <param name="finalSize">Size available</param>
+            <returns>Size used</returns>
+        </member>
+        <member name="M:Frosty.Core.Controls.VirtualizingTilePanel.CleanUpItems(System.Int32,System.Int32)">
+            <summary>
+            Revirtualize items that are no longer visible
+            </summary>
+            <param name="minDesiredGenerated">first item index that should be visible</param>
+            <param name="maxDesiredGenerated">last item index that should be visible</param>
+        </member>
+        <member name="M:Frosty.Core.Controls.VirtualizingTilePanel.OnItemsChanged(System.Object,System.Windows.Controls.Primitives.ItemsChangedEventArgs)">
+            <summary>
+            When items are removed, remove the corresponding UI if necessary
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:Frosty.Core.Controls.VirtualizingTilePanel.CalculateExtent(System.Windows.Size,System.Int32)">
+            <summary>
+            Calculate the extent of the view based on the available size
+            </summary>
+            <param name="availableSize">available size</param>
+            <param name="itemCount">number of data items</param>
+            <returns></returns>
+        </member>
+        <member name="M:Frosty.Core.Controls.VirtualizingTilePanel.GetVisibleRange(System.Int32@,System.Int32@)">
+            <summary>
+            Get the range of children that are visible
+            </summary>
+            <param name="firstVisibleItemIndex">The item index of the first visible item</param>
+            <param name="lastVisibleItemIndex">The item index of the last visible item</param>
+        </member>
+        <member name="M:Frosty.Core.Controls.VirtualizingTilePanel.GetChildSize">
+            <summary>
+            Get the size of the children. We assume they are all the same
+            </summary>
+            <returns>The size</returns>
+        </member>
+        <member name="M:Frosty.Core.Controls.VirtualizingTilePanel.ArrangeChild(System.Int32,System.Windows.UIElement,System.Windows.Size)">
+            <summary>
+            Position a child
+            </summary>
+            <param name="itemIndex">The data item index of the child</param>
+            <param name="child">The element to position</param>
+            <param name="finalSize">The size of the panel</param>
+        </member>
+        <member name="M:Frosty.Core.Controls.VirtualizingTilePanel.CalculateChildrenPerRow(System.Windows.Size)">
+            <summary>
+            Helper function for tiling layout
+            </summary>
+            <param name="availableSize">Size available</param>
+            <returns></returns>
+        </member>
+        <member name="M:Frosty.Core.Controls.Editors.FrostyPointerRefControl.Popup_DropDownOpened(System.Object,System.EventArgs)">
+            <summary>
+            Updates the popup UI
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Frosty.Core.Controls.Editors.FrostyPointerRefControl.CreateButton_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Creates a new class reference
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Frosty.Core.Controls.Editors.FrostyPointerRefControl.OpenButton_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Opens the referenced asset
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Controls.Editors.FrostyPointerRefControl.FindButton_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Finds the referenced asset in the data explorer
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Frosty.Core.Controls.Editors.FrostyPointerRefControl.Popup_SelectionChanged(System.Object,System.Windows.Controls.SelectionChangedEventArgs)">
+            <summary>
+            Performs the actual assinging for either internal or external selection
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Frosty.Core.Controls.Editors.FrostyPointerRefControl.OptionsButton_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Brings up the options menu, where a user can clear the reference, find a reference in the data explorer,
+            create a new reference, or assign from a class within the currently edited ebx
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Frosty.Core.Controls.Editors.FrostyPointerRefControl.ClearButton_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Clears the reference
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Frosty.Core.Controls.Editors.FrostyPointerRefControl.AssignButton_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Assigns an ebx class from an external ebx
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Frosty.Core.Controls.Editors.FrostyPointerRefControl.Refresh">
+            <summary>
+            Updates the UI and bindings
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Controls.Editors.FrostyPointerRefControl.RefreshUI">
+            <summary>
+            Updates the UI
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Controls.Editors.FrostyPointerRefControl.GetParentEditor">
+            <summary>
+            Returns the editor that owns the property grid that this editor is a part of
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Frosty.Core.Controls.Editors.FrostyPointerRefControl.GetPropertyItem">
+            <summary>
+            Returns the property grid item that this editor belongs to
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Frosty.Core.Controls.FrostyPropertyGridItem.CopyGuidMenuItem_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Copies the PointerRef's guid to the clipboard
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Controls.FrostyPropertyGridItem.CopyMenuItem_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Copies the items data to the clipboard
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Controls.FrostyPropertyGridItem.PasteMenuItem_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Tries to paste the currently copied clipboard data
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Controls.FrostyPropertyGridItem.ArrayInsertBeforeMenuItem_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Inserts a new array element before the selected item
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Controls.FrostyPropertyGridItem.ArrayInsertAfterMenuItem_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Inserts a new array element after the selected item
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Controls.FrostyPropertyGridItem.ArrayRemoveButton_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Removes the selected array element
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.DataExplorerContextMenuExtension.#ctor">
+            <summary>
+            Initializes a new instance of <see cref="T:Frosty.Core.DataExplorerContextMenuExtension"/> class.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.DataExplorerContextMenuExtension.ContextItemName">
+            <summary>
+            When implemented in a derived class, gets the name of the tab item this extension will create.
+            </summary>
+            <returns>The name to use for the menu item.</returns>
+        </member>
+        <member name="P:Frosty.Core.DataExplorerContextMenuExtension.Icon">
+            <summary>
+            When implemented in a derived class, gets the icon displayed for this context menu item.
+            </summary>
+            <returns>A <see cref="T:System.Windows.Media.ImageSource"/> that represents the icon to display for the context menu item.</returns>
+        </member>
+        <member name="T:Frosty.Core.ToolbarExtension">
+            <summary>
+            Describes an extension to the toolbar. Classes that derive from this class can 
+            specify the name, icon and action to perform when clicked.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.ToolbarExtension.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.ToolbarExtension"/> class.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.ToolbarExtension.Name">
+            <summary>
+            When implemented in a derived class, gets the name of the toolbar item this extension will create.
+            </summary>
+            <returns>The name to use for the menu item.</returns>
+        </member>
+        <member name="P:Frosty.Core.ToolbarExtension.Icon">
+            <summary>
+            When implemented in a derived class, gets the icon displayed for this toolbar item.
+            </summary>
+            <returns>A <see cref="T:SharpDX.Direct2D1.ImageSource"/> that represents the icon to display for the toolbar item.</returns>
+        </member>
+        <member name="P:Frosty.Core.ToolbarExtension.ToolbarItemClicked">
+            <summary>
+            When implemented in a derived class, gets the action to perform when this too item is clicked.
+            </summary>
+            <returns>The action to perform when the toolbar item is clicked.</returns>
+        </member>
+        <member name="P:Frosty.Core.FrostyProfileTaskWindowLogger.Progress">
+            <summary>
+            The progress of the current task.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.FrostyProfileTaskWindowLogger.Status">
+            <summary>
+            The splash window's status.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Legacy.LegacyFileManagerV2.GenerateDeterministicGuid(Frosty.Core.Legacy.LegacyFileEntry)">
+            <summary>
+            Will return a unique but determinstic guid based on the filename of the asset. This will
+            ensure to minimize random conflicts between unassociated objects
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Legacy.LegacyFileManager.GenerateDeterministicGuid(Frosty.Core.Legacy.LegacyFileEntry)">
+            <summary>
+            Will return a unique but determinstic guid based on the filename of the asset. This will
+            ensure to minimize random conflicts between unassociated objects
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.Mod.HandlerExtraData">
+            <summary>
+            Holds the custom handler and the final data block for a given handler. Used by the mod manager to store
+            the handlers per asset.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Mod.HandlerExtraData.Handler">
+            <summary>
+            Gets or sets the action handler.
+            </summary>
+            <returns>The action handler.</returns>
+        </member>
+        <member name="P:Frosty.Core.Mod.HandlerExtraData.Data">
+            <summary>
+            Gets or sets the final data block.
+            </summary>
+            <returns>The final data block.</returns>
+        </member>
+        <member name="T:Frosty.Core.Mod.HandlerUsage">
+            <summary>
+            Represents the usage of the handler, what types of actions it performs on its sub data.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.Mod.HandlerUsage.Modify">
+            <summary>
+            Completely modifies or replaces the data per mod.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.Mod.HandlerUsage.Merge">
+            <summary>
+            Merges data from one mod to another.
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.Mod.ICustomActionHandler">
+            <summary>
+            Provides functionality for the handling of custom data from saving and loading in the editor to loading and
+            applying in the mod manager.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Mod.ICustomActionHandler.SaveToMod(Frosty.Core.IO.FrostyModWriter,FrostySdk.Managers.Entries.AssetEntry)">
+            <summary>
+            Handles the saving of the custom data to a mod.
+            </summary>
+            <param name="writer">The writer that is writing the mod.</param>
+            <param name="entry">The asset being written.</param>
+        </member>
+        <member name="T:Frosty.Core.Mod.IModCustomActionHandler">
+            <summary>
+            Provides functionality for the handling of custom data from saving and loading in the editor to loading and
+            applying in the mod manager.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Mod.IModCustomActionHandler.Usage">
+            <summary>
+            Gets the type of action this handler performs. This has no impact on the actual functionality of the
+            handler and is used to display information in the mod managers actions screen.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Mod.IModCustomActionHandler.Load(System.Object,System.Byte[])">
+            <summary>
+            Handles the loading and merging of the custom data.
+            </summary>
+            <param name="existing">The existing object data that has been loaded from previous mods.</param>
+            <param name="newData">The byte array consisting of the data to be loaded.</param>
+            <returns>The new object data.</returns>
+        </member>
+        <member name="M:Frosty.Core.Mod.IModCustomActionHandler.Modify(FrostySdk.Managers.Entries.AssetEntry,FrostySdk.Managers.AssetManager,Frosty.Core.Mod.RuntimeResources,System.Object,System.Byte[]@)">
+            <summary>
+            Handles the actual modification of the base data with the custom data.
+            </summary>
+            <param name="origEntry">The asset currently being modified.</param>
+            <param name="am">The asset manager.</param>
+            <param name="runtimeResources">The container for storing any dynamically built resources.</param>
+            <param name="data">The object data to be applied.</param>
+            <param name="outData">The final assets data in a compressed byte array.</param>
+        </member>
+        <member name="M:Frosty.Core.Mod.IModCustomActionHandler.GetResourceActions(System.String,System.Byte[])">
+            <summary>
+            Returns a collection of sub resources that this handler modifies, this gives the handler an oppurtunity to list
+            what changes it makes and might be overriden by other mods on a change by change basis.
+            </summary>
+            <param name="name">The name of the base resource.</param>
+            <param name="data">The byte array consisting of the resource data.</param>
+            <returns>A collection of sub resource strings. In the format of ResourceName;ResourceType;Action</returns>
+        </member>
+        <member name="T:Frosty.Core.Mod.ModResourceType">
+            <summary>
+            Represents the type of the data the resource represents.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.Mod.ModResourceType.Invalid">
+            <summary>
+            Invalid resource type.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.Mod.ModResourceType.Embedded">
+            <summary>
+            Embedded data such as icons or images.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.Mod.ModResourceType.Ebx">
+            <summary>
+            Data relating to ebx assets.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.Mod.ModResourceType.Res">
+            <summary>
+            Data relating to resources.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.Mod.ModResourceType.Chunk">
+            <summary>
+            Data relating to chunks.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.Mod.ModResourceType.Bundle">
+            <summary>
+            Data relating to bundles.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.Mod.ModResourceType.FsFile">
+            <summary>
+            Data relating to initfs files.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Mod.FrostyMod.#ctor(System.String,FrostySdk.DbObject)">
+            <summary>
+            Legacy constructor
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Mod.FrostyMod.#ctor(System.String)">
+            <summary>
+            Constructor for new binary format
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.TabExtension">
+            <summary>
+            Describes an extension to the tab system. Classes that derive from this class can
+            specify the name, icon, and content of the tab item.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.TabExtension.#ctor">
+            <summary>
+            Initializes a new instance of <see cref="T:Frosty.Core.TabExtension"/> class.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.TabExtension.TabItemName">
+            <summary>
+            When implemented in a derived class, gets the name of the tab item this extension will create.
+            </summary>
+            <returns>The name to use for the menu item.</returns>
+        </member>
+        <member name="P:Frosty.Core.TabExtension.TabItemIcon">
+            <summary>
+            When implemented in a derived class, gets the icon of the tab item this extension will create.
+            </summary>
+            <returns>The name to use for the menu item.</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:Frosty.Core.TabExtension.TabContent" -->
+        <member name="M:Frosty.Core.TypeExtensions.RegisterKeyBindings(System.Windows.Input.CommandBindingCollection,System.Collections.Generic.Dictionary{System.Windows.Input.KeyGesture,System.Windows.Input.ExecutedRoutedEventHandler})">
+            <summary>
+            Registers key bindings to a <see cref="T:System.Windows.Input.CommandBindingCollection"/> via a dictionary of <see cref="T:System.Windows.Input.KeyGesture"/>/<see cref="T:System.Windows.Input.ExecutedRoutedEventHandler"/> pairings.
+            </summary>
+            <param name="gestureHandlerPairings">The dictionary of key/handler pairings to be used.</param>
+        </member>
+        <member name="T:Frosty.Core.HalfUtils">
+            <summary>
+            Contains functions for working with half values.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.HalfUtils.Unpack(System.UInt16)">
+            <summary>
+            Unpacks the specified unsigned short value to its half equivalent.
+            </summary>
+            <param name="h">The unsigned short value.</param>
+            <returns>A float representing the unpacked half.</returns>
+        </member>
+        <member name="M:Frosty.Core.HalfUtils.Pack(System.Single)">
+            <summary>
+            Packs the specified half to its unsigned short equivalent.
+            </summary>
+            <param name="f">The half value.</param>
+            <returns>An unsigned short representing the packed half.</returns>
+        </member>
+        <member name="T:Frosty.Core.Windows.FrostyProfileSelectWindow">
+            <summary>
+            FrostyProfileSelectWindow
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Windows.FrostyProfileSelectWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.Windows.FrostyProfileTaskWindow">
+            <summary>
+            Interaction logic for FrostyProfileTaskWindow.xaml
+            </summary>
+            <summary>
+            FrostyProfileTaskWindow
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Windows.FrostyProfileTaskWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.Windows.KeyPromptWindow">
+            <summary>
+            Interaction logic for KeyPromptWindow.xaml
+            </summary>
+            <summary>
+            KeyPromptWindow
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Windows.KeyPromptWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.Windows.OptionsWindow">
+            <summary>
+            Interaction logic for OptionsWindow.xaml
+            </summary>
+            <summary>
+            OptionsWindow
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Windows.OptionsWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.Windows.AssetInstancesWindow">
+            <summary>
+            Interaction logic for AssetInstancesWindow.xaml
+            </summary>
+            <summary>
+            AssetInstancesWindow
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Windows.AssetInstancesWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.Windows.ClassSelector">
+            <summary>
+            Interaction logic for ClassSelector.xaml
+            </summary>
+            <summary>
+            ClassSelector
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Windows.ClassSelector.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.Windows.FrostyTaskWindow">
+            <summary>
+            Interaction logic for FrostyTaskWindow.xaml
+            </summary>
+            <summary>
+            FrostyTaskWindow
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Windows.FrostyTaskWindow.Progress">
+            <summary>
+            The progress of the inner task.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Windows.FrostyTaskWindow.Status">
+            <summary>
+            The status of the inner task.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Windows.FrostyTaskWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.Windows.PatchSummaryWindow">
+            <summary>
+            Interaction logic for PatchSummaryWindow.xaml
+            </summary>
+            <summary>
+            PatchSummaryWindow
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Windows.PatchSummaryWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.Windows.RenameInstanceWindow">
+            <summary>
+            Interaction logic for RenameInstanceWindow.xaml
+            </summary>
+            <summary>
+            RenameInstanceWindow
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Windows.RenameInstanceWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.Windows.SdkUpdateWindow">
+            <summary>
+            Interaction logic for SdkUpdateWindow.xaml
+            </summary>
+            <summary>
+            SdkUpdateWindow
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Windows.SdkUpdateWindow.OnDetectRunningProcess(Frosty.Core.Windows.SdkUpdateTask,System.Object)">
+            <summary>
+            Waits for the game process to become active before completing
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Windows.SdkUpdateWindow.OnFindTypeInfoOffset(Frosty.Core.Windows.SdkUpdateTask,System.Object)">
+            <summary>
+            Locates the offset to the first type info object in the active games memory
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Windows.SdkUpdateWindow.OnGatherTypesFromMemory(Frosty.Core.Windows.SdkUpdateTask,System.Object)">
+            <summary>
+            Gathers all type info objects from the active games memory
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Windows.SdkUpdateWindow.OnCrossReferenceAssets(Frosty.Core.Windows.SdkUpdateTask,System.Object)">
+            <summary>
+            Uses the games assets to determine the final set of classes for the SDK
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Windows.SdkUpdateWindow.OnCreateSdk(Frosty.Core.Windows.SdkUpdateTask,System.Object)">
+            <summary>
+            Produces the final Profile SDK DLL
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Windows.SdkUpdateWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.OptionsExtension">
+            <summary>
+            Describes an extension to the options system. Classes that derive from this class can
+            specify how to load, validate and save new options.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.OptionsExtension.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.OptionsExtension"/> class.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.OptionsExtension.Load">
+            <summary>
+            When implemented in a derived class, allows the user to specify how to load the data for this options extension.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.OptionsExtension.Validate">
+            <summary>
+            When implemented in a derived class, allows the user to specify how to validate this options extension.
+            </summary>
+            <returns>True if the options set are valid, false otherwise.</returns>
+        </member>
+        <member name="M:Frosty.Core.OptionsExtension.Save">
+            <summary>
+            When implemented in a derived class, allows the user to specify how to save the data for this options extension.
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.Bookmarks.AssetBookmarkTarget">
+            <summary>
+            A <see cref="T:Frosty.Core.Bookmarks.BookmarkTarget"/> that points to a specific EBX asset by filename.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.AssetBookmarkTarget.Text">
+            <summary>
+            The path and type name of the referenced asset.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.AssetBookmarkTarget.Asset">
+            <summary>
+            The path of the referenced asset.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.AssetBookmarkTarget.TypeName">
+            <summary>
+            The type name of the referenced asset.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.AssetBookmarkTarget.Icon">
+            <summary>
+            Retrieves the icon that corresponds to <see cref="P:Frosty.Core.Bookmarks.AssetBookmarkTarget.Asset"/>, as determined by <see cref="T:Frosty.Core.Converters.AssetEntryToBitmapSourceConverter"/>.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Bookmarks.AssetBookmarkTarget.#ctor">
+            <summary>
+            Creates a blank AssetBookmarkTarget.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Bookmarks.AssetBookmarkTarget.#ctor(FrostySdk.Managers.Entries.AssetEntry)">
+            <summary>
+            Creates an AssetBookmarkTarget referencing the asset at the given path.
+            </summary>
+            <param name="entry"></param>
+        </member>
+        <member name="M:Frosty.Core.Bookmarks.AssetBookmarkTarget.NavigateTo(System.Boolean)">
+            <summary>
+            Directs the Data Explorer of the current Frosty Editor instance to select and open the referenced asset.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Bookmarks.AssetBookmarkTarget.LoadData(System.String)">
+            <summary>
+            Sets this AssetBookmarkTarget to reference the asset at the given path.
+            </summary>
+            <param name="serializedData">The path of the asset to reference.</param>
+        </member>
+        <member name="M:Frosty.Core.Bookmarks.AssetBookmarkTarget.SerializeData">
+            <summary>
+            Returns the path to the referenced asset.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Frosty.Core.Bookmarks.BookmarkContext">
+            <summary>
+            A BookmarkContext describes a list of bookmarks, the <see cref="T:Frosty.Core.Bookmarks.BookmarkTarget"/> that would be created 
+            if the user were to request a bookmark to be created, and events that are raised whenever the available target becomes available or unavailable.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.BookmarkContext.Name">
+            <summary>
+            The name of the BookmarkContext, as shown in the contexts LisBox and in the <see cref="T:Frosty.Core.Bookmarks.BookmarkDb"/>.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.BookmarkContext.AvailableTarget">
+            <summary>
+            Gets or sets the <see cref="T:Frosty.Core.Bookmarks.BookmarkTarget"/> currently being made available for bookmarking from this context.
+            </summary>
+        </member>
+        <member name="E:Frosty.Core.Bookmarks.BookmarkContext.TargetAvailable">
+            <summary>
+            Raised after <see cref="P:Frosty.Core.Bookmarks.BookmarkContext.AvailableTarget"/> has been set to a new non-null value.
+            </summary>
+        </member>
+        <member name="E:Frosty.Core.Bookmarks.BookmarkContext.TargetUnavailable">
+            <summary>
+            Raised after <see cref="P:Frosty.Core.Bookmarks.BookmarkContext.AvailableTarget"/> has been set to null.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.BookmarkContext.Bookmarks">
+            <summary>
+            The list of <see cref="T:Frosty.Core.Bookmarks.BookmarkTarget"/>s that have been bookmarked for this context.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Bookmarks.BookmarkContext.#ctor(System.String,System.Collections.Generic.List{Frosty.Core.Bookmarks.BookmarkItem})">
+            <summary>
+            Constructs a new BookmarkContext with the given name and initial bookmarks.
+            </summary>
+            <param name="name"></param>
+            <param name="bookmarks"></param>
+        </member>
+        <member name="T:Frosty.Core.Bookmarks.BookmarkDb">
+            <summary>
+            Stores all the bookmarks and manages the bookmark contexts for the Frosty editor.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.Bookmarks.BookmarkDb.Contexts">
+            <summary>
+            Stores all the registered <see cref="T:Frosty.Core.Bookmarks.BookmarkContext"/>s and their corresponding names.
+            </summary>
+        </member>
+        <member name="E:Frosty.Core.Bookmarks.BookmarkDb.ContextChanged">
+            <summary>
+            Raised directly before <see cref="P:Frosty.Core.Bookmarks.BookmarkDb.CurrentContext"/> is changed. The new context is the sender argument.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.BookmarkDb.CurrentContext">
+            <summary>
+            Gets or sets the current <see cref="T:Frosty.Core.Bookmarks.BookmarkContext"/>
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Bookmarks.BookmarkDb.GetContext(System.String)">
+            <summary>
+            Finds or creates a <see cref="T:Frosty.Core.Bookmarks.BookmarkContext"/> with the specified name.
+            </summary>
+            <param name="name">The name of the <see cref="T:Frosty.Core.Bookmarks.BookmarkContext"/> to find or create.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Frosty.Core.Bookmarks.BookmarkDb.SpawnBookmarkTarget(System.String)">
+            <summary>
+            Instantiates a <see cref="T:Frosty.Core.Bookmarks.BookmarkTarget"/> from a serialized bookmark string.
+            </summary>
+            <param name="serialized">The serialized bookmark data, in the form 'Namespace.FullTypeName:data'</param>
+            <returns></returns>
+        </member>
+        <member name="M:Frosty.Core.Bookmarks.BookmarkDb.LoadDb">
+            <summary>
+            Loads bookmarks and contexts from the Config system.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Bookmarks.BookmarkDb.LoadBookmark(System.String,System.Collections.Generic.List{Frosty.Core.Bookmarks.BookmarkItem})">
+            <summary>
+            Reads a single bookmark and places it in the bookmark tree.
+            </summary>
+            <param name="data">The bookmark, serialized as a string.</param>
+            <param name="allItems">All the bookmarks that have been loaded so far.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Frosty.Core.Bookmarks.BookmarkDb.SaveBookmark(Frosty.Core.Bookmarks.BookmarkItem,System.Int32@,System.Collections.Generic.Dictionary{Frosty.Core.Bookmarks.BookmarkItem,System.Int32})">
+            <summary>
+            Recursively serializes a bookmark hierarchy into a <see cref="T:System.Collections.Generic.List`1"/>.
+            </summary>
+            <param name="item">The root bookmark to serialize.</param>
+            <param name="count">A running total of how many bookmarks have been serialized so far.</param>
+            <param name="indexes">A mapping of previously-serialized bookmarks to their indices in the previously-serialized output.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Frosty.Core.Bookmarks.BookmarkDb.SaveDb">
+            <summary>
+            Writes the entire bookmark database to the Config system.
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.Bookmarks.BookmarkItem">
+            <summary>
+            An entry in the user's bookmarks library.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.BookmarkItem.Target">
+            <summary>
+            The destination target of this bookmark.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.BookmarkItem.Name">
+            <summary>
+            The user-assigned name of this particular item.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.BookmarkItem.Text">
+            <summary>
+            The readonly text shown on the bookmark.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.BookmarkItem.Icon">
+            <summary>
+            Returns the icon of this instance's <see cref="P:Frosty.Core.Bookmarks.BookmarkItem.Target"/>.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.BookmarkItem.Children">
+            <summary>
+            The child bookmark items stored with this bookmark item.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.Bookmarks.BookmarkItem.Parent">
+            <summary>
+            The bookmark item that this item is stored with.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.BookmarkItem.IsExpanded">
+            <summary>
+            Whether the corresponding TreeViewItem is expanded.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.BookmarkItem.IsSelected">
+            <summary>
+            Whether the corresponding TreeViewItem is selected.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.BookmarkItem.IsVisible">
+            <summary>
+            Whether the corresponding TreeViewItem is allowed to be displayed.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.BookmarkItem.IsFiltered">
+            <summary>
+            Whether this bookmark item has been excluded by the active filter.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.BookmarkItem.IsFolder">
+            <summary>
+            Whether the bookmark target is a folder.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.BookmarkItem.IsNamed">
+            <summary>
+            Whether this bookmark item has been given a name by the user.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Bookmarks.BookmarkItem.#ctor(Frosty.Core.Bookmarks.BookmarkTarget,Frosty.Core.Bookmarks.BookmarkItem)">
+            <summary>
+            Creates a new bokmark item with the specified target and parent.
+            </summary>
+            <param name="target"></param>
+            <param name="parent"></param>
+        </member>
+        <member name="T:Frosty.Core.Bookmarks.BookmarkTarget">
+            <summary>
+            The base class for destinations of links in Frosty.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.BookmarkTarget.Text">
+            <summary>
+            A short but unique textual representation of the target.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.BookmarkTarget.Icon">
+            <summary>
+            An icon that represents the type of target.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Bookmarks.BookmarkTarget.NavigateTo(System.Boolean)">
+            <summary>
+            Navigates to the target.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.Bookmarks.BookmarkTarget.Serialize">
+            <summary>
+            Returns a <see cref="T:System.String"/> that can be used to store this bookmark for later loading via <see cref="M:Frosty.Core.Bookmarks.BookmarkTarget.LoadData(System.String)"/>.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Bookmarks.BookmarkTarget.SerializeData">
+            <summary>
+            Returns a <see cref="T:System.String"/> that can be used to recreate this target.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Frosty.Core.Bookmarks.BookmarkTarget.LoadData(System.String)">
+            <summary>
+            Restores the state of a target that has been stored in the given string.
+            </summary>
+            <param name="serializedData"></param>
+        </member>
+        <member name="M:Frosty.Core.Bookmarks.BookmarkTarget.Equals(System.Object)">
+            <summary>
+            Determines whether this target is identical to another bookmark target by checking the types and the serialized state.
+            </summary>
+            <param name="obj">The other target to check against.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Frosty.Core.Config.AddGame(System.String,System.String)">
+            <summary>
+            Adds a <see cref="T:Frosty.Core.Config.GameOptions"/> to the active <see cref="T:Frosty.Core.Config"/>.
+            </summary>
+            <param name="profile">The profile name.</param>
+            <param name="gamePath">The path to the game.</param>
+        </member>
+        <member name="M:Frosty.Core.Config.RemoveGame(System.String)">
+            <summary>
+            Removes a <see cref="T:Frosty.Core.Config.GameOptions"/> from the active <see cref="T:Frosty.Core.Config"/>.
+            </summary>
+            <param name="profile">The profile name.</param>
+        </member>
+        <member name="M:Frosty.Core.Config.Add(System.String,System.Object,Frosty.Core.ConfigScope,System.String)">
+            <summary>
+            Adds or modifies the specified option in the <see cref="T:Frosty.Core.Config"/>.
+            </summary>
+            <param name="option">The key of the option to add or modify.</param>
+            <param name="value">The value of the option to store.</param>
+            <param name="scope">The <see cref="T:Frosty.Core.ConfigScope"/> of the option.</param>
+            <param name="profile">The profile the option belongs to. If null, the currently active profile will be used.</param>
+        </member>
+        <member name="M:Frosty.Core.Config.Remove(System.String,Frosty.Core.ConfigScope,System.String)">
+            <summary>
+            Removes the specified option in the <see cref="T:Frosty.Core.Config"/>.
+            </summary>
+            <param name="option">The key of the option to remove.</param>
+            <param name="scope">The <see cref="T:Frosty.Core.ConfigScope"/> of the option.</param>
+            <param name="profile">The profile the option belongs to. If null, the currently active profile will be used.</param>
+        </member>
+        <member name="M:Frosty.Core.Config.Contains(System.String,Frosty.Core.ConfigScope)">
+            <summary>
+            Determines whether the <see cref="T:Frosty.Core.Config"/> contains the specified key.
+            </summary>
+            <param name="option">The option key to locate in the <see cref="T:Frosty.Core.Config"/>.</param>
+        </member>
+        <member name="M:Frosty.Core.Config.Get``1(System.String,``0,Frosty.Core.ConfigScope,System.String)">
+            <summary>
+            Adds or modifies the specified option in the <see cref="T:Frosty.Core.Config"/>.
+            </summary>
+            <param name="option">The key of the option in the <see cref="T:Frosty.Core.Config"/> to add or modify.</param>
+            <param name="defaultValue">The default value of the option, if not found in the <see cref="T:Frosty.Core.Config"/>.</param>
+            <param name="scope">The <see cref="T:Frosty.Core.ConfigScope"/> of the option.</param>
+            <param name="profile">The profile the option belongs to. If null, the currently active profile will be used.</param>
+        </member>
+        <member name="M:Frosty.Core.Config.Save(System.String)">
+            <summary>
+            Serializes the configurable options to a json file.
+            </summary>
+            <param name="path">The output path of the configuration file.</param>
+        </member>
+        <member name="M:Frosty.Core.Config.Load(System.String)">
+            <summary>
+            Deserializes the configurable options from a json file into a <see cref="T:Frosty.Core.Config"/> object.
+            </summary>
+            <param name="path">The input path of the configuration file.</param>
+        </member>
+        <member name="M:Frosty.Core.Handlers.LegacyCustomActionHandler.Load(System.Object,System.Byte[])">
+            <summary>
+            Handles the loading and merging of the custom data
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Handlers.LegacyCustomActionHandler.Modify(FrostySdk.Managers.Entries.AssetEntry,FrostySdk.Managers.AssetManager,Frosty.Core.Mod.RuntimeResources,System.Object,System.Byte[]@)">
+            <summary>
+            Handles the actual modification of the base data with the custom data
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.ILocalizedStringDatabase">
+            <summary>
+            Defines actions that can be performed on a localized string database. Can be obtained using <see cref="P:Frosty.Core.LocalizedStringDatabase.Current"/>
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.ILocalizedStringDatabase.Initialize">
+            <summary>
+            Initializes the localized string database.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.ILocalizedStringDatabase.GetString(System.UInt32)">
+            <summary>
+            Retrieves the string with the specified ID from the localized string database.
+            </summary>
+            <param name="id">The ID of the string to obtain.</param>
+            <returns>The string with the specified ID from the localized string database.</returns>
+        </member>
+        <member name="M:Frosty.Core.ILocalizedStringDatabase.GetString(System.String)">
+            <summary>
+            Retrieves the string with the specified string ID (Typically begins with ID_) from the localized string database.
+            </summary>
+            <param name="stringId">The string ID of the string to obtain.</param>
+            <returns>The string with the specified string ID from the localized string database.</returns>
+        </member>
+        <member name="M:Frosty.Core.ILocalizedStringDatabase.SetString(System.UInt32,System.String)">
+            <summary>
+            Sets the value of the string with the specified ID from the localized string database.
+            </summary>
+            <param name="id">The ID of the string to obtain.</param>
+        </member>
+        <member name="M:Frosty.Core.ILocalizedStringDatabase.SetString(System.String,System.String)">
+            <summary>
+            Sets the value of the string with the specified ID from the localized string database.
+            </summary>
+            <param name="id">The ID of the string to obtain.</param>
+        </member>
+        <member name="M:Frosty.Core.ILocalizedStringDatabase.RevertString(System.UInt32)">
+            <summary>
+            Reverts the value of the string with the specified ID from the localized string database.
+            </summary>
+            <param name="id">The ID of the string to obtain.</param>
+        </member>
+        <member name="M:Frosty.Core.ILocalizedStringDatabase.isStringEdited(System.UInt32)">
+            <summary>
+            Checks if the string with the specified ID from the localized string database is modified.
+            </summary>
+            <param name="id">The ID of the string to obtain.</param>
+        </member>
+        <member name="M:Frosty.Core.ILocalizedStringDatabase.AddStringWindow">
+            <summary>
+            Opens a window to add strings to the localized string database.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.ILocalizedStringDatabase.BulkReplaceWindow">
+            <summary>
+            Opens a window to replace all occurances of a string in the localized string database.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.ILocalizedStringDatabase.EnumerateStrings">
+            <summary>
+            Retrieves a collection of string IDs that currently reside in the localized string database.
+            </summary>
+            <returns>A collection of string IDs, or an empty collection if no strings exist.</returns>
+        </member>
+        <member name="M:Frosty.Core.ILocalizedStringDatabase.EnumerateModifiedStrings">
+            <summary>
+            Retrieves a collection of string IDs that were modified from the localized string database.
+            </summary>
+            <returns>A collection of string IDs, or an empty collection if no modified strings exist.</returns>
+        </member>
+        <member name="T:Frosty.Core.LocalizedStringDatabase">
+            <summary>
+            Provides access to the currently loaded localized string database.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.LocalizedStringDatabase.Current">
+            <summary>
+            Gets the currently loaded localized string database.
+            </summary>
+            <returns>The currently loaded localized string database.</returns>
+        </member>
+        <member name="T:Frosty.Core.MenuExtension">
+            <summary>
+            Describes an extension to the menu system. Classes that derive from this class can 
+            specify the location of the menu item to construct, along with its name, icon and action
+            to perform when clicked.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.MenuExtension.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.MenuExtension"/> class.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.MenuExtension.TopLevelMenuName">
+            <summary>
+            When implemented in a derived class, gets the name of the top level menu item this menu item will be placed.
+            </summary>
+            <returns>The name of the top level menu item to place the menu item into.</returns>
+        </member>
+        <member name="P:Frosty.Core.MenuExtension.SubLevelMenuName">
+            <summary>
+            When implemented in a derived class, gets the name of the child menu item (of the top level menu item) this menu item will be placed.
+            </summary>
+            <returns>The name of the child menu item to place the menu item into.</returns>
+        </member>
+        <member name="P:Frosty.Core.MenuExtension.MenuItemName">
+            <summary>
+            When implemented in a derived class, gets the name of the menu item this extension will create.
+            </summary>
+            <returns>The name to use for the menu item.</returns>
+        </member>
+        <member name="P:Frosty.Core.MenuExtension.Icon">
+            <summary>
+            When implemented in a derived class, gets the icon displayed for this menu item.
+            </summary>
+            <returns>A <see cref="T:System.Windows.Media.ImageSource"/> that represents the icon to display for the menu item.</returns>
+        </member>
+        <member name="P:Frosty.Core.MenuExtension.MenuItemClicked">
+            <summary>
+            When implemented in a derived class, gets the action to perform when this menu item is clicked.
+            </summary>
+            <returns>The action to perform when the menu item is clicked.</returns>
+        </member>
+        <member name="T:Frosty.Core.PluginLoadType">
+            <summary>
+            Describes when the plugin should be loaded.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.PluginLoadType.Startup">
+            <summary>
+            The plugin loads on app startup.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.PluginLoadType.Initialize">
+            <summary>
+            The plugin loads during the profile loading process.
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.PluginManagerType">
+            <summary>
+            Describes the context in which the plugin manager is loading.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.PluginManagerType.Editor">
+            <summary>
+            The plugin is loading into the editor.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.PluginManagerType.ModManager">
+            <summary>
+            The plugin is loading into the mod manager.
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.PluginManagerType.Both">
+            <summary>
+            The plugin is loading for both the editor and mod manager.
+            </summary>
+        </member>
+        <member name="T:Frosty.Core.ShaderDefinition">
+            <summary>
+            Represents a shader loaded from a plugin
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.ShaderDefinition.Assembly">
+            <summary>
+            Gets the plugin in which the shader is located.
+            </summary>
+            <returns>The <see cref="P:Frosty.Core.ShaderDefinition.Assembly"/> that represents the plugin.</returns>
+        </member>
+        <member name="P:Frosty.Core.ShaderDefinition.ResourceName">
+            <summary>
+            Gets the name of the shader resource file in the format of Namespace.ResourceName.
+            </summary>
+            <returns>The name of the shader resource file.</returns>
+        </member>
+        <member name="P:Frosty.Core.ShaderDefinition.ShaderType">
+            <summary>
+            Gets the type of shader.
+            </summary>
+            <returns>The type of shader.</returns>
+        </member>
+        <member name="M:Frosty.Core.ShaderDefinition.#ctor(System.Reflection.Assembly,Frosty.Core.Attributes.ShaderType,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.ShaderDefinition"/> class with the plugin, shader type, and resource name.
+            </summary>
+            <param name="plugin">The plugin in which the shader is located.</param>
+            <param name="type">The type of shader.</param>
+            <param name="resourceName">The resource name of the shader in the format of Namespace.ResourceName.</param>
+        </member>
+        <member name="T:Frosty.Core.PluginManager">
+            <summary>
+            Represents the core plugin manager responsible for loading and managing of plugin extensions.
+            </summary>
+        </member>
+        <member name="P:Frosty.Core.PluginManager.MenuExtensions">
+            <summary>
+            Retreives a collection of menu extensions that have been loaded from plugins.
+            </summary>
+            <returns>A collection of menu extensions.</returns>
+        </member>
+        <member name="P:Frosty.Core.PluginManager.ToolbarExtensions">
+            <summary>
+            Retreives a collection of toolbar extensions that have been loaded from plugins.
+            </summary>
+            <returns>A collection of toolbar extensions.</returns>
+        </member>
+        <member name="P:Frosty.Core.PluginManager.TabExtensions">
+            <summary>
+            Retreives a collection of menu extensions that have been loaded from plugins.
+            </summary>
+            <returns>A collection of menu extensions.</returns>
+        </member>
+        <member name="P:Frosty.Core.PluginManager.DataExplorerContextMenuExtensions">
+            <summary>
+            Retreives a collection of data explorer context menu item extensions that have been loaded from plugins.
+            </summary>
+            <returns>A collection of menu extensions.</returns>
+        </member>
+        <member name="P:Frosty.Core.PluginManager.OptionsExtensions">
+            <summary>
+            Retrieves a collection of options extensions that have been loaded from plugins.
+            </summary>
+            <returns>A collection of options extensions.</returns>
+        </member>
+        <member name="P:Frosty.Core.PluginManager.Profiles">
+            <summary>
+            Retreives a collection of profiles that have been loaded from plugins.
+            </summary>
+            <returns>A collection of profiles.</returns>
+        </member>
+        <member name="P:Frosty.Core.PluginManager.StartupActions">
+            <summary>
+            Retreives a collection of startup actions that have been loaded from plugins.
+            </summary>
+            <returns>A collection of startup actions.</returns>
+        </member>
+        <member name="P:Frosty.Core.PluginManager.ExecutionActions">
+            <summary>
+            Retreives a collection of execution actions that have been loaded from plugins.
+            </summary>
+            <returns>A collection of execution actions.</returns>
+        </member>
+        <member name="P:Frosty.Core.PluginManager.LoadedPlugins">
+            <summary>
+            Retreives a collection of loaded plugins.
+            </summary>
+            <returns>A collection of loaded plugins.</returns>
+        </member>
+        <member name="P:Frosty.Core.PluginManager.ManagerType">
+            <summary>
+            Retreives an enum defining which manager is being loaded right now.
+            </summary>
+            <returns>An enum defining which manager is being loaded right now..</returns>
+        </member>
+        <member name="M:Frosty.Core.PluginManager.#ctor(FrostySdk.Interfaces.ILogger,Frosty.Core.PluginManagerType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Frosty.Core.PluginManager"/> class with the specified logger and context.
+            </summary>
+            <param name="logger">The logging interface the plugin manager should use.</param>
+            <param name="context">The context which this plugin should load for.</param>
+        </member>
+        <member name="M:Frosty.Core.PluginManager.Initialize">
+            <summary>
+            Initializes all of the post-profile assembly plugins.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.PluginManager.Clear">
+            <summary>
+            Clears out every registered plugin extension
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.PluginManager.GetAssetDefinition(System.String)">
+            <summary>
+            Returns the <see cref="T:Frosty.Core.AssetDefinition"/> with the specified type.
+            </summary>
+            <param name="type">The type of the asset definition to obtain.</param>
+            <returns>The <see cref="T:Frosty.Core.AssetDefinition"/>.</returns>
+        </member>
+        <member name="M:Frosty.Core.PluginManager.GetTypeEditor(System.String)">
+            <summary>
+            Returns the <see cref="T:System.Type"/> to use to construct the type editor with the specified lookup name.
+            </summary>
+            <param name="lookupName">The lookup name of the type editor to obtain.</param>
+            <returns>The <see cref="T:System.Type"/> of the type editor.</returns>
+        </member>
+        <member name="M:Frosty.Core.PluginManager.GetTypeOverride(System.String)">
+            <summary>
+            Returns the <see cref="T:System.Type"/> of the type override class with the specified lookup name.
+            </summary>
+            <param name="lookupName">The lookup name of the type override to obtain.</param>
+            <returns>The <see cref="T:System.Type"/> of the type override.</returns>
+        </member>
+        <member name="M:Frosty.Core.PluginManager.IsThirdPartyDll(System.String)">
+            <summary>
+            Returns true if a plugin has registered the specified name as a third party DLL.
+            </summary>
+            <param name="name">The name of the DLL to check.</param>
+            <returns>True if a plugin has registered the specified name as a third party DLL.</returns>
+        </member>
+        <member name="M:Frosty.Core.PluginManager.IsManagerType(Frosty.Core.PluginManagerType)">
+            <summary>
+            Returns true if the loaded manager is the same a the specific manager type.
+            </summary>
+            <returns>A boolean if the loaded manager is the specified manager type.</returns>
+        </member>
+        <member name="M:Frosty.Core.PluginManager.GetPluginAssembly(System.String)">
+            <summary>
+            Returns the <see cref="T:System.Reflection.Assembly"/> of the specified plugin if it is loaded. Returns null otherwise.
+            </summary>
+            <param name="name">The name of the plugin to obtain.</param>
+            <returns>The <see cref="T:System.Reflection.Assembly"/> of the plugin.</returns>
+        </member>
+        <member name="M:Frosty.Core.PluginManager.GetLocalizedStringDatabase">
+            <summary>
+            Creates and returns the localized string database. Or a default one if one was not specified by any
+            of the loaded plugin.
+            </summary>
+            <returns>The constructed <see cref="T:Frosty.Core.ILocalizedStringDatabase"/>.</returns>
+        </member>
+        <member name="M:Frosty.Core.PluginManager.GetShader(Frosty.Core.Attributes.ShaderType,System.String)">
+            <summary>
+            Returns the shader bytecode of the shader specified by the name and shader type.
+            </summary>
+            <param name="type">The <see cref="T:Frosty.Core.Attributes.ShaderType"/> of the shader.</param>
+            <param name="name">The resource name of the shader.</param>
+            <returns>The bytecode of the shader.</returns>
+        </member>
+        <member name="M:Frosty.Core.RelayCommand.#ctor(System.Action{System.Object})">
+            <summary>
+            Creates a new command that can always execute.
+            </summary>
+            <param name="execute">The execution logic.</param>
+        </member>
+        <member name="M:Frosty.Core.RelayCommand.#ctor(System.Action{System.Object},System.Predicate{System.Object})">
+            <summary>
+            Creates a new command.
+            </summary>
+            <param name="execute">The execution logic.</param>
+            <param name="canExecute">The execution status logic.</param>
+        </member>
+        <member name="F:Frosty.Core.Screens.DeferredRenderScreen2.meshes">
+            <summary>
+            The list of meshes to be rendered in the next frame
+            </summary>
+        </member>
+        <member name="F:Frosty.Core.Screens.DeferredRenderScreen2.gBufferCollection">
+            <summary>
+            The collection of GBuffers
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.CreateSizeDependentBuffers">
+            <summary>
+            Creates all buffers that are dependent on viewport size
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.CreateBuffers">
+            <summary>
+            Creates all other buffers
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.Update(System.Double)">
+            <summary>
+            Called once a frame to perform any update steps like animation, etc.
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.Render">
+            <summary>
+            Performs the actual render to screen
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.DisposeSizeDependentBuffers">
+            <summary>
+            Dispose of any buffers dependent on viewport size, this is called when the viewport
+            changes sizes or is closed
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.DisposeBuffers">
+            <summary>
+            Dispose of all buffers not viewport dependent
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.CalculateSphericalHarmonics">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.PreintegrateIBL">
+            <summary>
+            Generates the preintegrated DFG, Diffuse LD, and Specular LD textures required for IBL
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.ClearRenderTargets">
+            <summary>
+            Clears all render targets associated with this screen
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.RenderBasePass">
+            <summary>
+            Renders the geometry into gbuffers
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.RenderShadows">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.RenderMeshes(Frosty.Core.Viewport.MeshRenderPath,System.Collections.Generic.List{Frosty.Core.Screens.MeshRenderInstance})">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.RenderLights">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.RenderIBL">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.ResolveNormalsForHBAO">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.RenderEmissive">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.PostProcess">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.Resolve">
+            <summary>
+            Resolve from light accumulation to final render target
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.PostProcessTAA">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.PostProcessDownScaleScene">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.PostProcessMeasureLuminance">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.PostProcessBloom">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.PostProcessHBAO">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.PostProcessColorLookupTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.PostProcessCollectSelections">
+            <summary>
+            Collect the selected objects and render them to the selection buffer
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.PostProcessEditorPrimitives">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.PostProcessSelectionOutline">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.PostProcessEditorComposite">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.CalcWorldBoundingBox">
+            <summary>
+            Calculates a bounding box that encompasses all render meshes in the current world
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.BeginFrameActions">
+            <summary>
+            Do any actions required at the beginning of the frame
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Screens.DeferredRenderScreen2.EndFrameActions">
+            <summary>
+            Do any actions required at the end of the frame (where present would normally occur)
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.ShaderPermutation.LoadShaders(SharpDX.Direct3D11.Device)">
+            <summary>
+            Loads in the necessary shaders and resources
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.ShaderPermutation.SetState(SharpDX.Direct3D11.DeviceContext,Frosty.Core.Viewport.MeshRenderPath)">
+            <summary>
+            Sets up the render state for this permutation
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.ShaderPermutation.AssignParameters(Frosty.Core.Viewport.RenderCreateState,SharpDX.Direct3D11.Buffer@,System.Collections.Generic.List{SharpDX.Direct3D11.ShaderResourceView}@)">
+            <summary>
+            Assigns only the shaders default parameter values
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.ShaderPermutation.AssignParameters(Frosty.Core.Viewport.RenderCreateState,System.Collections.Generic.List{Frosty.Core.Viewport.ShaderParameter},System.Collections.Generic.List{Frosty.Core.Viewport.ShaderParameter},SharpDX.Direct3D11.Buffer@,System.Collections.Generic.List{SharpDX.Direct3D11.ShaderResourceView}@)">
+            <summary>
+            Assigns the shader parameters from the provided lists
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.ShaderPermutation.AssignParameters(Frosty.Core.Viewport.RenderCreateState,Frosty.Core.Viewport.MeshMaterial,SharpDX.Direct3D11.Buffer@,System.Collections.Generic.List{SharpDX.Direct3D11.ShaderResourceView}@)">
+            <summary>
+            Assigns the shader parameters from the provided material
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.ShaderPermutation.AssignFallbackParameters(Frosty.Core.Viewport.RenderCreateState,System.Object,Frosty.Core.Viewport.MeshMaterial)">
+            <summary>
+            Assigns the shader parameters for the fallback shader only (this should only be used for a particular shader and mesh type)
+            NOTE: Use of dynamic here as MeshRenderSection exists in the MeshSet plugin, however the fallback shader requires the MeshRenderSection
+                  to populate the parameters correctly
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.ShaderPermutation.CreateFallback(SharpDX.Direct3D11.Device,Frosty.Core.Viewport.Shader)">
+            <summary>
+            Creates the mandatory fallback shader to be used where a custom shader is not provided
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.Shader.Load(System.String)">
+            <summary>
+            Loads the xml descriptor for the specified shader and compiles all shader permutations if required
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.Shader.ConstructShaderForRenderPass(System.String,System.String,Frosty.Core.Viewport.ShaderPermutation)">
+            <summary>
+            Uses the specified template and hlsl to construct a full shader for a render pass
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.MeshMaterial.SetTextureParameter(System.String,FrostySdk.Managers.Entries.EbxAssetEntry)">
+            <summary>
+            Sets the specified texture parameter
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.MeshMaterial.SetVectorParameter(System.String,System.Object)">
+            <summary>
+            Sets the specified vector parameter using a Vec4
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.MeshMaterial.SetVectorParameter(System.String,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the specified vector parameter using a series of floats
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.MeshMaterialCollection.#ctor(FrostySdk.IO.EbxAsset,FrostySdk.Ebx.PointerRef)">
+            <summary>
+            Build the mesh material collection from a meshs material blocks (and optional variation)
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.MeshMaterialCollection.#ctor(System.Object,Frosty.Core.Viewport.MeshMaterial)">
+            <summary>
+            Build the mesh material collection from a single material
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.MeshMaterialCollection.SetTextureParameter(System.String,FrostySdk.Managers.Entries.EbxAssetEntry)">
+            <summary>
+            Sets the specified texture parameter on all materials
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.MeshMaterialCollection.SetVectorParameter(System.String,System.Object)">
+            <summary>
+            Sets the specified vector parameter on all materials using a Vec4
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.MeshMaterialCollection.SetVectorParameter(System.String,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the specified texture parameter on all materials using a series of floats
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.MeshMaterialCollection.PopulateMaterialFromShaderInstance(Frosty.Core.Viewport.MeshMaterial,System.Object,FrostySdk.Ebx.PointerRef@)">
+            <summary>
+            Fill in texture/shader parameters from a shader instance structure
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.MeshMaterialCollection.PopulateMaterialFromMeshVariation(Frosty.Core.Viewport.MeshMaterial,Frosty.Core.Viewport.MeshVariation)">
+            <summary>
+            Fill in texture parameters from a mesh variation entry
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.MeshRenderShape.CreateSphere(Frosty.Core.Viewport.RenderCreateState,System.String,System.String,System.Single,System.Int32)">
+            <summary>
+            Constructs a renderable sphere
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.MeshRenderShape.CreateCube(Frosty.Core.Viewport.RenderCreateState,System.String,System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Constructs a renderable box
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.MeshRenderShape.CreatePlane(Frosty.Core.Viewport.RenderCreateState,System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Constructs a renderable plane along the X and Z axes
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.MeshRenderShape.#ctor(Frosty.Core.Viewport.RenderCreateState,System.String,System.String,System.Collections.Generic.List{Frosty.Core.Viewport.MeshRenderShape.ShapeVertex},System.Collections.Generic.List{System.UInt16})">
+            <summary>
+            Constructs a renderable shape from a list of vertices/indices
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.MeshRenderShape.Render(SharpDX.Direct3D11.DeviceContext,Frosty.Core.Viewport.MeshRenderPath)">
+            <summary>
+            Renders this shape
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.FrostyDeviceManager.GetDevice">
+            <summary>
+            Returns the global D3D11 device (creates it if necessary)
+            </summary>
+        </member>
+        <member name="M:Frosty.Core.Viewport.D3DUtils.BeginPerfEvent(SharpDX.Direct3D11.DeviceContext,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="M:Frosty.Core.Viewport.D3DUtils.EndPerfEvent(SharpDX.Direct3D11.DeviceContext)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
+        </member>
+    </members>
+</doc>

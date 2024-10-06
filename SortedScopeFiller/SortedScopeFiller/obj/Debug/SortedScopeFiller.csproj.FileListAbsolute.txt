@@ -1,0 +1,2 @@
+C:\Users\Mandarela Extreme\Documents\Frost Plugin\SortedScopeFiller\SortedScopeFiller\obj\Debug\SortedScopeFiller.csproj.AssemblyReference.cache
+C:\Users\Mandarela Extreme\Documents\Frost Plugin\SortedScopeFiller\SortedScopeFiller\obj\Debug\SortedScopeFiller.csproj.CoreCompileInputs.cache
